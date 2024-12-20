@@ -6,7 +6,15 @@
     <title>Hyperion Navigator</title>
 </head>
 <body>
-    <h1>{{ src }}</h1>
+    <h1>Route van #{{ src }} naar {{dest_label}}</h1>
 
+    <script>
+        // Assume 'dest_number' and 'dest_label' are set in your template.
+        var destNumber = "{{ dest_number }}";
+        var destLabel = "{{ dest_label }}";
+    
+        console.log("number: " + destNumber + ", label: " + destLabel);
+    </script>
+    
 </body>
 </html>

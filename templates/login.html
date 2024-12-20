@@ -10,15 +10,130 @@
     {% if src %}
     <h1>{{ src }}</h1>
     {% else %}
-    <h1>No information given</h1>
+    <h1>No info</h1>
     {% endif %}
+
     <form action="/<src>" method="POST">
         <label for="src">Van:</label>
-        <input type="number" id="srcbox" name="srcbox" required="required" value="{{src}}" maxlength="3">
+        <br>
+        <input type="number" id="srcbox" name="srcbox" value="{{src}}" maxlength="3" required>
         <br><br>
-        <label for="dest">Naar:</label>
+        <label>Naar:</label>
+        <br>
+        <!-- Container for radio buttons -->
+        <div id="radio-container"></div>
         <br><br>
-        <input type="submit">
+        <input type="hidden" id="dest_label" name="dest_label">
+        <div id="submit">
+            <input type="submit">
+        </div>
     </form>
+    
+    <script>
+        // List of lists (number, label) in the desired order
+        const dest = [
+        [1, "Bandhok"],
+        [3, "Fietsenkelder"],
+        [8, "Conciërge"],
+        [33, "Bibliotheek"],
+        [32, "Lokaal 03"],
+        [30, "Lokaal 02b"],
+        [28, "Lokaal 02a"],
+        [29, "Lokaal 01"],
+        [25, "Docenten werkruimte (yr-03)"],
+        [26, "Teamleider (yr-02)"],
+        [27, "Examensecretariaat (yr-01)"],
+        [19, "Kantine"],
+        [23, "WC’s begane grond"],
+        [45, "Lokaal 14"],
+        [47, "Lokaal 15a"],
+        [48, "Lokaal 15b"],
+        [52, "Lokaal 16"],
+        [57, "Roostermaker"],
+        [56, "Auditorium"],
+        [59, "Muziekhokjes"],
+        [61, "WC’s 1e verdieping"],
+        [65, "Administratie (yr-12)"],
+        [67, "Lokaal 10"],
+        [68, "Lokaal 11"],
+        [40, "Lokaal 12"],
+        [39, "Lokaal 13"],
+        [92, "Lokaal 24"],
+        [89, "Lokaal 23b"],
+        [88, "Lokaal 23a"],
+        [157, "Teamleider (yr-21)"],
+        [87, "Lokaal 25 (Muzieklokaal)"],
+        [83, "WC’s 2e verdieping"],
+        [78, "Lokaal 21b"],
+        [79, "Lokaal 22"],
+        [75, "Lokaal 21a"],
+        [74, "Lokaal 20"],
+        [73, "Lokaal 26"],
+        [71, "Ingang lerarenkamer"],
+        [96, "Lokaal 34c"],
+        [97, "TOA’s"],
+        [100, "Lokaal 35"],
+        [103, "Lokaal 34b"],
+        [104, "Lokaal 34a"],
+        [108, "WC’s zuidzijde 3e verdieping"],
+        [112, "Lokaal 32b"],
+        [113, "Lokaal 32a"],
+        [115, "Lokaal 31 (2D atelier)"],
+        [116, "Lokaal 30 (3D atelier)"],
+        [107, "Lokaal 33 (Makerspace)"],
+        [130, "WC’s noordzijde 3e verdieping"],
+        [122, "Rector (yr-36)"],
+        [123, "Teamleider (yr-35)"],
+        [124, "Zorg (yr-34)"],
+        [126, "Decaan (yr-33)"],
+        [129, "Zorg (yr-32)"],
+        [128, "Bureau V (yr-31)"],
+        [133, "Lokaal 44"],
+        [134, "Lokaal 43a"],
+        [135, "Lokaal 43b"],
+        [136, "Lokaal 42"],
+        [150, "WC’s 4e verdieping"],
+        [151, "Kleedruimte heren noordzijde"],
+        [154, "Kleedruimte dames noordzijde"],
+        [139, "Kleedruimte heren zuidzijde"],
+        [145, "Kleedruimte dames zuidzijde"],
+        [146, "Gym 41"],
+        [147, "Gym 40"],
+        [156, "Stormruimte"],
+        [141, "Het Nest"]
+    ];
+    
+    
+        // Get the container where the radio buttons will be displayed
+        const container = document.getElementById("radio-container");
+    
+        // Loop through the list to create radio buttons in the correct order
+        dest.forEach(([key, label]) => {
+            // Create the radio button
+            const radioButton = document.createElement("input");
+            radioButton.type = "radio";
+            radioButton.id = key;
+            radioButton.name = "dest_number";  // Ensure this is the same for all radio buttons
+            radioButton.value = key; // The value sent to the server will be the key
+    
+            // Create the label
+            const radioLabel = document.createElement("label");
+            radioLabel.setAttribute("for", key);
+            radioLabel.textContent = label;
+    
+            // Append the radio button and label to the container
+            container.appendChild(radioButton);
+            container.appendChild(radioLabel);
+            container.appendChild(document.createElement("br"));  // Line break
+    
+            // Add event listener to update the hidden field with the corresponding label
+            radioButton.addEventListener("change", function () {
+                document.getElementById("dest_label").value = label;
+            });
+        });
+    </script>
+    
+    
+    
 </body>
 </html>

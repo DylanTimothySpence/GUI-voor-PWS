@@ -1,3 +1,33 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+    text-align: left;
+}
+
+form {
+    border: 0px solid black;
+}
+
+#submit {
+    position: fixed;
+    bottom: 0;
+    background-color: white;
+    border: 2px solid black;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#submit input {
+    background-color: white;
+}
+
+#submit input:active {
+    background-color: red;
+}
+
 #srcbox {
     width: 3em;
 }
