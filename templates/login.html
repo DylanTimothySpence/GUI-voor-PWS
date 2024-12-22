@@ -14,9 +14,13 @@
     {% endif %}
 
     <form action="/<src>" method="POST">
+        <label for="speed">Snelheid:</label>
+        <br>
+        <input type="range" min="0.5" max="2" value="1.34" class="slider" id="speed">
+        <br><br>
         <label for="src">Van:</label>
         <br>
-        <input type="number" id="srcbox" name="srcbox" value="{{src}}" maxlength="3" required>
+        <span>#</span><input type="number" id="srcbox" name="srcbox" value="{{src}}" maxlength="3" required>
         <br><br>
         <label>Naar:</label>
         <br>
@@ -28,11 +32,12 @@
             <input type="submit">
         </div>
     </form>
+    <br><br>
     
     <script>
         // List of lists (number, label) in the desired order
         const dest = [
-        [1, "Bandhok"],
+        [0, "Bandhok"],
         [3, "Fietsenkelder"],
         [8, "Conciërge"],
         [33, "Bibliotheek"],

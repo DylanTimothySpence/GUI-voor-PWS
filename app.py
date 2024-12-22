@@ -16,6 +16,7 @@ def login(src):
 
 @app.route("/van-<src>-naar-<dest_label>-<dest_number>")
 def map(src, dest_label, dest_number):
+    #route, time = run_algorithm(src, dest_number)
     return render_template("map.html", src=src, dest_label=dest_label, dest_number=dest_number)
 
 if __name__ == "__main__":
