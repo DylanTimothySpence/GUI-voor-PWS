@@ -56,11 +56,11 @@ def run_algorithm(graph, startnode, endnode, speed):
     time = walking_time(path_weight[endnode], speed)
     return route, time
 
-path = 'oefen_adj_list.csv'
-graph = csv_to_adjacency_list(path)
-route, time = run_algorithm(graph=graph, startnode=3, endnode=13, speed=1)
-print(f'route: {route}, time: {time}s')
+# path = 'oefen_adj_list.csv'
+# graph = csv_to_adjacency_list(path)
+# route, time = run_algorithm(graph=graph, startnode=3, endnode=13, speed=1)
+# print(f'route: {route}, time: {time}s')
 
-terminate_time = datetime.now()
-process_time = terminate_time - launch_time
-print(f'time to run is: {process_time}')
+# terminate_time = datetime.now()
+# process_time = terminate_time - launch_time
+# print(f'time to run is: {process_time}')

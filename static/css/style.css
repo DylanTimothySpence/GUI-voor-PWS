@@ -8,8 +8,29 @@ form {
     border: 0px solid black;
 }
 
-/*css for "submit" is inline in html for faster load*/
+#speed_slider {
+    visibility: visible;
+}
 
+#submit {
+    position: fixed;
+    bottom: 0;
+    background-color: white;
+    border: 2px solid black;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#submit input {
+    background-color: white;
+}
+
+#submit input:hover {
+    background-color: grey;
+}
 #submit input:active {
     background-color: red;
 }
