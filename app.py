@@ -25,7 +25,7 @@ def map(src, dest_label, dest_number, speed):
     graph = csv_to_adjacency_list(path)
     route, time = run_algorithm(graph=graph, startnode=int(src), endnode=int(dest_number), speed=float(speed))
     print(f'route: {route}, time: {time}s')
-    return render_template("map.html", src=src, dest_label=dest_label, dest_number=dest_number, speed=speed, route=route, time=time)
+    return render_template("map.html", src=src, dest_label=dest_label, dest_number=dest_number, speed=speed, route=route, time=time, graph=graph)
 
 if __name__ == "__main__":
     app.run(debug=True)

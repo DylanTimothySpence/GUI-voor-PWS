@@ -15,21 +15,11 @@
     <svg id="svg_1" style="background-image: url('{{ url_for('static', filename='images/1.jpg') }}');"></svg>
     <svg id="svg_0" style="background-image: url('{{ url_for('static', filename='images/BG.jpg') }}');"></svg>
 
-
-
-    <script>//script to check data type of recieved data
-        var destNumber = {{ dest_number }};
-        var destLabel = "{{ dest_label }}";
-        console.log("dest number: " + destNumber + ", label: " + destLabel);
-        console.log("dest number type: " + typeof destNumber + ", label type: " + typeof destLabel);
-    </script>
-
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-
     <script>
-        route = {{route}};
-
+        const route = {{route}};
         console.log(route)
+        const graph = {{graph}}
+        console.log(graph)
 
         nodes = [
             { id: 0, x: null, y: null, z: 0 },
@@ -58,6 +48,11 @@
             if (routeFloors.has(floor)) {
                 svg.style.display = "block"; // Show SVG if in routeFloors
             }
-        });    </script>
+        });    
+
+    </script>
+    <div id="tooltip"></div>
+    <script src="{{ url_for('static', filename='js/tooltip.js') }}"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </body>
 </html>

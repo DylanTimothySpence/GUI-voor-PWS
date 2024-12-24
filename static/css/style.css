@@ -22,9 +22,20 @@ svg {
     background-size: cover;
     border: 2px solid black;
     margin-top: 5px;
-    max-width: 600px;
+    /* max-width: 600px; */
+    width: 100%;
     aspect-ratio: 960 / 540;
     display: none;
+}
+
+#tooltip {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 100;
 }
 
 #speed_slider {
