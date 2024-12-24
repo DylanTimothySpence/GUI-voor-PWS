@@ -11,7 +11,7 @@ route = []
 time = 0
 graph = {}
 speed = 1
-average_speed = 1 #meters per seconde
+average_speed = 1.34 #meters per seconde
 
 def check_connected_nodes(graph, node, path_weight, previous_node, visited):
     for connected_node, weight in graph[node]:  

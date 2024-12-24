@@ -1,11 +1,30 @@
+:root {
+    --padding: 0px;
+}
+
+* {
+    box-sizing: border-box;
+  }
+
 html, body {
     margin: 0px;
     padding: 0px;
     text-align: left;
+    height: 100%;
 }
 
 form {
     border: 0px solid black;
+}
+
+svg {
+    margin: auto;
+    background-size: cover;
+    border: 2px solid black;
+    margin-top: 5px;
+    max-width: 600px;
+    aspect-ratio: 960 / 540;
+    display: none;
 }
 
 #speed_slider {
@@ -22,6 +41,7 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 10;
 }
 
 #submit input {
