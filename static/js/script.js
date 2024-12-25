@@ -67,6 +67,10 @@ const color_flat_on_route = 'red';
 const color_flat_off_route = 'blue';
 const color_node_on_route = 'red';
 const color_node_off_route = 'blue';
+const color_endnode = 'red';
+const color_endnode_edge = "darkred"
+const color_startnode = 'red'
+const color_startnode_edge = "black"
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -136,6 +140,7 @@ node_coordinates.forEach(node => {
 
 // Add a red destination pin marker to the last node of the route
 const lastNodeId = route[route.length - 1];
+const firstNodeId = route[0]
 
 // Select the floor where the last node is located
 node_coordinates.forEach(node => {
@@ -150,23 +155,77 @@ node_coordinates.forEach(node => {
 
     // If this is the floor where the last node is located, add the destination pin
     if (node.id === lastNodeId) {
-        // Google Maps style map pin: Teardrop shape with sharp point and circular top
-        svg.append("path")
-            .attr("d", `M${node.x},${node.y - 30} 
-                        C${node.x - 20},${node.y - 60} ${node.x - 20},${node.y + 20} ${node.x},${node.y + 40} 
-                        C${node.x + 20},${node.y + 20} ${node.x + 20},${node.y - 60} ${node.x},${node.y - 30} 
-                        Z`)  // Teardrop shape with smooth curves
-            .attr("fill", "red") // Red color for the pin
-            .attr("stroke", "darkred") // Darker stroke color for the pin
+        svg.append("circle")
+            .attr("cx", node.x)  // Position it at the node's x coordinate
+            .attr("cy", node.y)  // Position it above the triangle part
+            .attr("r", 12)       // Larger radius for a more rounded top
+            .attr("fill", color_endnode) // Red color for the pin's top
+            .attr("stroke", color_endnode_edge) // Darker stroke color for the pin's top
             .attr("stroke-width", 2);
+    }
+
+    if (node.id === firstNodeId) {
 
         // Add the circular top part of the pin
         svg.append("circle")
             .attr("cx", node.x)  // Position it at the node's x coordinate
-            .attr("cy", node.y - 30)  // Position it above the triangle part
+            .attr("cy", node.y)  // Position it above the triangle part
             .attr("r", 12)       // Larger radius for a more rounded top
-            .attr("fill", "red") // Red color for the pin's top
-            .attr("stroke", "darkred") // Darker stroke color for the pin's top
+            .attr("fill", color_startnode) // Red color for the pin's top
+            .attr("stroke", color_startnode_edge) // Darker stroke color for the pin's top
             .attr("stroke-width", 2);
+    }
+});
+
+//chatGPT code snippet to add triangles for the stairs
+
+// Initialize arrays to store the nodes where the user must go up or down
+const nodesGoingUp = [];
+const nodesGoingDown = [];
+
+// First, iterate through the route and compare z values of adjacent nodes to categorize them
+for (let i = 0; i < route.length - 1; i++) {
+    const currentNode = node_coordinates.find(n => n.id === route[i]);
+    const nextNode = node_coordinates.find(n => n.id === route[i + 1]);
+
+    // If the next node has a higher z value (going up)
+    if (nextNode && nextNode.z > currentNode.z) {
+        nodesGoingUp.push(currentNode);
+    }
+    // If the next node has a lower z value (going down)
+    else if (nextNode && nextNode.z < currentNode.z) {
+        nodesGoingDown.push(currentNode);
+    }
+}
+
+// Log the nodes where you must go up and down
+console.log("Nodes where you must go up:");
+console.log(nodesGoingUp);
+
+console.log("Nodes where you must go down:");
+console.log(nodesGoingDown);
+
+// After categorizing the nodes, now draw the triangles
+// Add an upward triangle for nodes where you must go down
+nodesGoingDown.forEach(node => {
+    const svg = d3.select(`#svg_${node.z}`);
+    if (!svg.empty()) {
+        svg.append("polygon")
+            .attr("points", `${node.x},${node.y} ${node.x - 10},${node.y - 10} ${node.x + 10},${node.y - 10}`)
+            .attr("fill", "black") // Change color as needed
+            .attr("stroke", "black")
+            .attr("stroke-width", 1);
+    }
+});
+
+// Add a downward triangle for nodes where you must go up
+nodesGoingUp.forEach(node => {
+    const svg = d3.select(`#svg_${node.z}`);
+    if (!svg.empty()) {
+        svg.append("polygon")
+            .attr("points", `${node.x},${node.y} ${node.x - 10},${node.y + 10} ${node.x + 10},${node.y + 10}`)
+            .attr("fill", "black") // Change color as needed
+            .attr("stroke", "black")
+            .attr("stroke-width", 1);
     }
 });
