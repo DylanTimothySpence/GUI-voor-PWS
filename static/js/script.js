@@ -4,21 +4,21 @@ console.log("graph:")
 console.log(graph) //these are filled by flask
 
 node_coordinates = [
-    { id: 0, x: 406, y: 138, z: 0 },
-    { id: 1, x: 323, y: 141, z: 0 },
-    { id: 2, x: 178, y: 69, z: 0 },
-    { id: 3, x: 169, y: 232, z: 0 },
-    { id: 4, x: 42, y: 251, z: 0 },
-    { id: 5, x: 44, y: 251, z: 1 },
-    { id: 6, x: 188, y: 219, z: 1 },
-    { id: 7, x: 410, y: 192, z: 1 },
-    { id: 8, x: 366, y: 72, z: 1 },
-    { id: 9, x: 185, y: 75, z: 1 },
-    { id: 10, x: 456, y: 30, z: 1 },
-    { id: 11, x: 460, y: 32, z: 2 },
-    { id: 12, x: 417, y: 165, z: 2 },
-    { id: 13, x: 193, y: 227, z: 2 },
-    { id: 14, x: 156, y: 71, z: 2 },
+    { id: 0, x: 80, y: 27, z: 0 },
+    { id: 1, x: 63, y: 27, z: 0 },
+    { id: 2, x: 33, y: 13, z: 0 },
+    { id: 3, x: 34, y: 45, z: 0 },
+    { id: 4, x: 9, y: 49, z: 0 },
+    { id: 5, x: 9, y: 49, z: 1 },
+    { id: 6, x: 37, y: 42, z: 1 },
+    { id: 7, x: 80, y: 37, z: 1 },
+    { id: 8, x: 72, y: 12, z: 1 },
+    { id: 9, x: 36, y: 14, z: 1 },
+    { id: 10, x: 90, y: 7, z: 1 },
+    { id: 11, x: 90, y: 7, z: 2 },
+    { id: 12, x: 82, y: 32, z: 2 },
+    { id: 13, x: 34, y: 44, z: 2 },
+    { id: 14, x: 31, y: 14, z: 2 },
 ]
 
 const routeFloors = new Set(route.map(id => node_coordinates.find(node => node.id === id)?.z));
@@ -74,6 +74,11 @@ const color_startnode_edge = "black"
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+function scaleCoordinate(value, parentWidth) {
+    return (value * parentWidth) / 100;
+}
+
+
 // Draw the network for each floor
 node_coordinates.forEach(node => {
     const floor = node.z;
@@ -93,14 +98,17 @@ node_coordinates.forEach(node => {
         return sourceNode?.z === floor && targetNode?.z === floor;
     });
 
+    const parentWidth = svg.node().clientWidth; // Calculate parent width once for this SVG
+    console.log("parentWidth: " + parentWidth)
+
     // Draw links
     svg.selectAll("line")
         .data(floorLinks)
         .join("line")
-        .attr("x1", d => node_coordinates.find(n => n.id === d.source)?.x)
-        .attr("y1", d => node_coordinates.find(n => n.id === d.source)?.y)
-        .attr("x2", d => node_coordinates.find(n => n.id === d.target)?.x)
-        .attr("y2", d => node_coordinates.find(n => n.id === d.target)?.y)
+        .attr("x1", d => scaleCoordinate(node_coordinates.find(n => n.id === d.source)?.x, parentWidth))
+        .attr("y1", d => scaleCoordinate(node_coordinates.find(n => n.id === d.source)?.y, parentWidth))
+        .attr("x2", d => scaleCoordinate(node_coordinates.find(n => n.id === d.target)?.x, parentWidth))
+        .attr("y2", d => scaleCoordinate(node_coordinates.find(n => n.id === d.target)?.y, parentWidth))
         .attr("stroke", d => {
             const sourceNode = node_coordinates.find(n => n.id === d.source);
             const targetNode = node_coordinates.find(n => n.id === d.target);
@@ -115,22 +123,20 @@ node_coordinates.forEach(node => {
     svg.selectAll("circle")
         .data(floorNodes)
         .join("circle")
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
+        .attr("cx", d => scaleCoordinate(d.x, parentWidth))
+        .attr("cy", d => scaleCoordinate(d.y, parentWidth))
         .attr("r", 5)
         .attr("fill", d => route.includes(d.id) ? color_node_on_route : color_node_off_route)
         .attr("stroke", d => route.includes(d.id) ? color_node_on_route : color_node_off_route)
         .attr("stroke-width", 2)
-        .on("click", d => {
-            console.log(`Node clicked: ${d.id}`);
-        });
+
 
     // Add labels for node IDs
     svg.selectAll("text")
         .data(floorNodes)
         .join("text")
-        .attr("x", d => d.x + 10)
-        .attr("y", d => d.y + 5)
+        .attr("x", d => scaleCoordinate(d.x, parentWidth) + 10)
+        .attr("y", d => scaleCoordinate(d.y, parentWidth) + 5)
         .text(d => d.id)
         .attr("font-size", "12px")
         .attr("fill", "black");
