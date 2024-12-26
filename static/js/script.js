@@ -159,11 +159,13 @@ node_coordinates.forEach(node => {
         return;
     }
 
+    const parentWidth = svg.node().clientWidth;
+
     // If this is the floor where the last node is located, add the destination pin
     if (node.id === lastNodeId) {
         svg.append("circle")
-            .attr("cx", node.x)  // Position it at the node's x coordinate
-            .attr("cy", node.y)  // Position it above the triangle part
+            .attr("cx", scaleCoordinate(node.x, parentWidth))  // Position it at the node's x coordinate
+            .attr("cy", scaleCoordinate(node.y, parentWidth))  // Position it above the triangle part
             .attr("r", 12)       // Larger radius for a more rounded top
             .attr("fill", color_endnode) // Red color for the pin's top
             .attr("stroke", color_endnode_edge) // Darker stroke color for the pin's top
@@ -174,8 +176,8 @@ node_coordinates.forEach(node => {
 
         // Add the circular top part of the pin
         svg.append("circle")
-            .attr("cx", node.x)  // Position it at the node's x coordinate
-            .attr("cy", node.y)  // Position it above the triangle part
+            .attr("cx", scaleCoordinate(node.x, parentWidth))  // Position it at the node's x coordinate
+            .attr("cy", scaleCoordinate(node.y, parentWidth))  // Position it above the triangle part
             .attr("r", 12)       // Larger radius for a more rounded top
             .attr("fill", color_startnode) // Red color for the pin's top
             .attr("stroke", color_startnode_edge) // Darker stroke color for the pin's top
@@ -235,3 +237,15 @@ nodesGoingUp.forEach(node => {
             .attr("stroke-width", 1);
     }
 });
+
+
+// refresh on resize
+
+
+function windowResize() {
+    setTimeout(function(){
+        location.reload();
+    }, 50); // 50 milliseconds
+  }
+  
+window.onresize = windowResize;
