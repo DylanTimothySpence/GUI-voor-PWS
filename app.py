@@ -21,7 +21,7 @@ def login(src):
 
 @app.route("/van-<src>-naar-<dest_label>-<dest_number>-snelheid=<speed>")
 def map(src, dest_label, dest_number, speed):
-    path = 'oefen_adj_list.csv'
+    path = 'hlgraph.csv'
     graph = csv_to_adjacency_list(path)
     route, time = run_algorithm(graph=graph, startnode=int(src), endnode=int(dest_number), speed=float(speed))
     print(f'route: {route}, time: {time}s')
