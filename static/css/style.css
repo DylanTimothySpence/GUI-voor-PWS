@@ -11,7 +11,7 @@ body {
     margin: auto;
     padding: 0px;
     text-align: left;
-    border: 2px solid red;
+    border: 2px solid transparent;
 }
 
 form {
@@ -23,9 +23,8 @@ svg {
     background-size: cover;
     border: 2px solid black;
     margin-top: 5px;
-    /* max-width: 600px; */
     max-width: 600px;
-    aspect-ratio: 960 / 540;
+    aspect-ratio: 11995 / 6338;
     display: none;
 }
 
