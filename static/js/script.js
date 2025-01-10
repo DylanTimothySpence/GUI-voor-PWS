@@ -408,13 +408,13 @@ nodesGoingUp.forEach(node => {
 // refresh on resize
 
 
-function windowResize() {
-    setTimeout(function(){
-        location.reload();
-    }, 50); // 50 milliseconds
-  }
+// function windowResize() {
+//     setTimeout(function(){
+//         location.reload();
+//     }, 50); // 50 milliseconds
+//   }
   
-window.onresize = windowResize;
+// window.onresize = windowResize;
 
 //______________________ChatGPT solution for floor number in circle in upper left__
 
