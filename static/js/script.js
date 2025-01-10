@@ -177,6 +177,8 @@ const routeFloors = new Set(route.map(id => node_coordinates.find(node => node.i
 
 console.log("routeFloors:")
 console.log(routeFloors)
+
+
 // Make SVGs visible if they are part of the route
 document.querySelectorAll("svg").forEach(svg => {
     const floor = parseInt(svg.id.split('_')[1], 10); // Extract floor number from id
@@ -296,7 +298,8 @@ node_coordinates.forEach(node => {
         .attr("y", d => (scaleCoordinate((d.y), parentWidth) + parentWidth / 400))
         //This needs to become more DRY ^
         .text(d => d.id)
-        .attr("font-size", "1em")
+//        .attr("font-size", "1em")
+        .attr("font-size", `${parentWidth / 40}px`)
         .attr("fill", "black");
 });
 
@@ -412,3 +415,43 @@ function windowResize() {
   }
   
 window.onresize = windowResize;
+
+//______________________ChatGPT solution for floor number in circle in upper left__
+
+// Add circles and floor numbers to visible SVGs
+document.querySelectorAll("svg").forEach(svg => {
+    const floor = parseInt(svg.id.split('_')[1], 10); // Extract floor number from id
+    const parentWidth = svg.clientWidth; // Get the width of the SVG
+
+    if (!parentWidth || isNaN(floor)) {
+        console.warn(`Skipping SVG: ${svg.id} - Invalid floor number or parent width`);
+        return;
+    }
+
+    const d3Svg = d3.select(svg); // Use D3 to select the SVG
+
+    const circleRadius = parentWidth / 50; // Set circle radius
+    const circlePosition = parentWidth / 20; // Position for the circle
+
+    // Add a circle in the top-left corner with a border (edge)
+    d3Svg
+        .append("circle")
+        .attr("cx", circlePosition) // Position the circle
+        .attr("cy", circlePosition)
+        .attr("r", circleRadius)
+        .attr("fill", "white") // Fill color
+        .attr("stroke", "red") // Edge color
+        .attr("stroke-width", circleRadius / 8); // Edge thickness
+
+    // Add the floor number text inside the circle
+    d3Svg
+        .append("text")
+        .attr("x", circlePosition) // Match circle position
+        .attr("y", circlePosition + circleRadius * 0.15) // Fine-tune to center vertically
+        .attr("text-anchor", "middle") // Horizontal centering
+        .attr("dominant-baseline", "middle") // Align vertically to the middle
+        .attr("font-size", circleRadius * 1.2) // Scale font size
+        .attr("fill", "black") // Set text color
+        .text(floor); // Set the floor number as text
+});
+

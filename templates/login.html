@@ -7,16 +7,10 @@
     <title>Kies route</title>
 </head>
 <body>
-    {% if src %}
-    <h1>{{ src }}</h1>
-    {% else %}
-    <h1>No info</h1>
-    {% endif %}
-
-    <form action="/<src>" method="POST">
+    <form action="/" method="POST">
         <label for="speed">Snelheid: </label><span id="speed_display">1.34</span><span> m/s (1.34 is gemiddeld)</span>
         <br>
-        <input type="range" min="0" max="200" value="100" class="slider" id="speed_slider" name="speed_slider">
+        <input type="range" min="1" max="200" value="100" class="slider" id="speed_slider" name="speed_slider">
         <br><br>
         <label for="src">Van:</label>
         <br>
