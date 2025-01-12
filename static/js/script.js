@@ -215,16 +215,40 @@ console.log(nodes);
 console.log("links:")
 console.log(links)
 
-const color_stair_on_route = 'red';
-const color_stair_off_route = 'blue';
-const color_flat_on_route = 'red';
-const color_flat_off_route = 'blue';
-const color_node_on_route = 'red';
-const color_node_off_route = 'blue';
-const color_endnode = 'red';
-const color_endnode_edge = "darkred"
-const color_startnode = 'red'
-const color_startnode_edge = "black"
+let color_stair_on_route, color_stair_off_route, color_flat_on_route, color_flat_off_route;
+let color_node_on_route, color_node_off_route, color_endnode, color_endnode_edge;
+let color_startnode, color_startnode_edge;
+
+console.log("map", map)
+
+if (typeof map === 'undefined') {
+    var map = true; // or let map = true; depending on your scope preference
+  }
+  
+if (map) {
+  color_stair_on_route = 'red';
+  color_stair_off_route = 'blue';
+  color_flat_on_route = 'red';
+  color_flat_off_route = 'blue';
+  color_node_on_route = 'red';
+  color_node_off_route = 'blue';
+  color_endnode = 'red';
+  color_endnode_edge = 'darkred';
+  color_startnode = 'red';
+  color_startnode_edge = 'black';
+} else {
+    color_stair_on_route = 'transparent';
+    color_stair_off_route = 'transparent';
+    color_flat_on_route = 'transparent';
+    color_flat_off_route = 'transparent';
+    color_node_on_route = 'blue';
+    color_node_off_route = 'blue';
+    color_endnode = 'transparent';
+    color_endnode_edge = 'transparent';
+    color_startnode = 'transparent';
+    color_startnode_edge = 'transparent';
+}
+
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
