@@ -227,11 +227,11 @@ if (typeof map === 'undefined') {
   
 if (map) {
   color_stair_on_route = 'red';
-  color_stair_off_route = 'blue';
+  color_stair_off_route = 'transparent';
   color_flat_on_route = 'red';
-  color_flat_off_route = 'blue';
+  color_flat_off_route = 'transparent';
   color_node_on_route = 'red';
-  color_node_off_route = 'blue';
+  color_node_off_route = 'transparent';
   color_endnode = 'red';
   color_endnode_edge = 'darkred';
   color_startnode = 'red';
