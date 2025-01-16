@@ -231,7 +231,7 @@ if (map) {
   color_flat_on_route = 'red';
   color_flat_off_route = 'transparent';
   color_node_on_route = 'red';
-  color_node_off_route = 'transparent';
+  color_node_off_route = 'blue';
   color_endnode = 'red';
   color_endnode_edge = 'darkred';
   color_startnode = 'red';
