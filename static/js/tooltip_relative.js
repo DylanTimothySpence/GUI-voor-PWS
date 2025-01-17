@@ -1,6 +1,5 @@
 const tooltip = document.getElementById("tooltip");
 
-// Function to update tooltip position and content
 function updateTooltip(event) {
     const { offsetX, offsetY, pageX, pageY } = event;
     const parentWidth = event.currentTarget.clientWidth;
@@ -14,7 +13,6 @@ function updateTooltip(event) {
     tooltip.textContent = `${xPercent}% : ${yPercent}%`;
 }
 
-// Add event listeners to all visible SVG elements
 document.querySelectorAll("svg").forEach(svg => {
     svg.addEventListener("mousemove", updateTooltip);
     svg.addEventListener("mouseleave", () => {

@@ -1,9 +1,3 @@
-console.log("route:")
-console.log(route) //these are filled by flask
-console.log("graph:")
-console.log(graph) //these are filled by flask
-
-//list of relative node coordiantes (relative to parentWidth)
 const node_coordinates = [
     //kelder
     { id: 0, x: 28, y: 9, z: -1 },
@@ -175,54 +169,36 @@ const node_coordinates = [
 
 const routeFloors = new Set(route.map(id => node_coordinates.find(node => node.id === id)?.z));
 
-console.log("routeFloors:")
-console.log(routeFloors)
-
-
-// Make SVGs visible if they are part of the route
 document.querySelectorAll("svg").forEach(svg => {
-    const floor = parseInt(svg.id.split('_')[1], 10); // Extract floor number from id
+    const floor = parseInt(svg.id.split('_')[1], 10);
     if (routeFloors.has(floor)) {
-        svg.style.display = "block"; // Show SVG if in routeFloors
+        svg.style.display = "block";
     }
 });    
 
-// ------------------
-
-// Initialize nodes and links arrays
 const nodes = [];
 const links = [];
 
-// Create nodes based on the keys in the graph
 for (const id in graph) {
     nodes.push({ id: +id });
 }
 
-// Create links based on the adjacency list
 for (const [source, targets] of Object.entries(graph)) {
     targets.forEach(([target, weight]) => {
         links.push({
-            source: +source, // Convert to number
-            target,          // Already a number
-            weight           // Edge weight
+            source: +source,
+            target,
+            weight
         });
     });
 }
-
-// Log the resulting structure for verification
-console.log("nodes:")
-console.log(nodes);
-console.log("links:")
-console.log(links)
 
 let color_stair_on_route, color_stair_off_route, color_flat_on_route, color_flat_off_route;
 let color_node_on_route, color_node_off_route, color_endnode, color_endnode_edge;
 let color_startnode, color_startnode_edge;
 
-console.log("map", map)
-
 if (typeof map === 'undefined') {
-    var map = true; // or let map = true; depending on your scope preference
+    var map = true;
   }
   
 if (map) {
@@ -249,26 +225,19 @@ if (map) {
     color_startnode_edge = 'transparent';
 }
 
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 function scaleCoordinate(value, parentWidth) {
     return (value * parentWidth) / 100;
 }
 
-
-// Draw the network for each floor
 node_coordinates.forEach(node => {
     const floor = node.z;
-    const svg = d3.select(`#svg_${floor}`); // Select the corresponding SVG
+    const svg = d3.select(`#svg_${floor}`);
 
-    // Skip if SVG doesn't exist
     if (svg.empty()) {
         console.warn(`SVG for floor ${floor} not found.`);
         return;
     }
 
-    // Filter nodes and links for the current floor
     const floorNodes = node_coordinates.filter(n => n.z === floor);
     const floorLinks = links.filter(link => {
         const sourceNode = node_coordinates.find(n => n.id === link.source);
@@ -276,15 +245,13 @@ node_coordinates.forEach(node => {
         return sourceNode?.z === floor && targetNode?.z === floor;
     });
 
-    const parentWidth = svg.node().clientWidth; // Calculate parent width once for this SVG
-    console.log("parentWidth: " + parentWidth)
+    const parentWidth = svg.node().clientWidth;
 
     strokeWidth = parentWidth / 300
     r = strokeWidth * 2
     r_startnode = r * 2
     r_endnode = r * 2
 
-    // Draw links
     svg.selectAll("line")
         .data(floorLinks)
         .join("line")
@@ -302,7 +269,6 @@ node_coordinates.forEach(node => {
         })
         .attr("stroke-width", strokeWidth);
 
-    // Draw nodes
     svg.selectAll("circle")
         .data(floorNodes)
         .join("circle")
@@ -313,32 +279,23 @@ node_coordinates.forEach(node => {
         // .attr("stroke", d => route.includes(d.id) ? color_node_on_route : color_node_off_route)
         // .attr("stroke-width", r)
 
-
-    // Add labels for node IDs
     svg.selectAll("text")
         .data(floorNodes)
         .join("text")
         .attr("x", d => (scaleCoordinate((d.x), parentWidth) + parentWidth / 100))
         .attr("y", d => (scaleCoordinate((d.y), parentWidth) + parentWidth / 400))
-        //This needs to become more DRY ^
         .text(d => d.id)
-//        .attr("font-size", "1em")
         .attr("font-size", `${parentWidth / 40}px`)
         .attr("fill", "black");
 });
 
-// Chat GPT code snippet that adds destination mark for endnode:
-
-// Add a red destination pin marker to the last node of the route
 const lastNodeId = route[route.length - 1];
 const firstNodeId = route[0]
 
-// Select the floor where the last node is located
 node_coordinates.forEach(node => {
     const floor = node.z;
-    const svg = d3.select(`#svg_${floor}`); // Select the corresponding SVG
+    const svg = d3.select(`#svg_${floor}`);
 
-    // Skip if SVG doesn't exist
     if (svg.empty()) {
         console.warn(`SVG for floor ${floor} not found.`);
         return;
@@ -346,27 +303,24 @@ node_coordinates.forEach(node => {
 
     const parentWidth = svg.node().clientWidth;
 
-    // If this is the floor where the last node is located, add the destination pin
     if (node.id === lastNodeId) {
         svg.append("circle")
-            .attr("cx", scaleCoordinate(node.x, parentWidth))  // Position it at the node's x coordinate
-            .attr("cy", scaleCoordinate(node.y, parentWidth))  // Position it above the triangle part
-            .attr("r", parentWidth / 100)       // Larger radius for a more rounded top
-            // this needs to be made more DRY ^
-            .attr("fill", color_endnode) // Red color for the pin's top
-            .attr("stroke", color_endnode_edge) // Darker stroke color for the pin's top
+            .attr("cx", scaleCoordinate(node.x, parentWidth))
+            .attr("cy", scaleCoordinate(node.y, parentWidth))
+            .attr("r", parentWidth / 100)
+            .attr("fill", color_endnode)
+            .attr("stroke", color_endnode_edge)
             .attr("stroke-width", parentWidth / 500);
     }
 
     if (node.id === firstNodeId) {
 
-        // Add the circular top part of the pin
         svg.append("circle")
-            .attr("cx", scaleCoordinate(node.x, parentWidth))  // Position it at the node's x coordinate
-            .attr("cy", scaleCoordinate(node.y, parentWidth))  // Position it above the triangle part
-            .attr("r",  parentWidth / 100)       // Larger radius for a more rounded top
-            .attr("fill", color_startnode) // Red color for the pin's top
-            .attr("stroke", color_startnode_edge) // Darker stroke color for the pin's top
+            .attr("cx", scaleCoordinate(node.x, parentWidth))
+            .attr("cy", scaleCoordinate(node.y, parentWidth))
+            .attr("r",  parentWidth / 100)
+            .attr("fill", color_startnode)
+            .attr("stroke", color_startnode_edge)
             .attr("stroke-width",  parentWidth / 500);
     }
 });
@@ -442,40 +396,37 @@ nodesGoingUp.forEach(node => {
 
 //______________________ChatGPT solution for floor number in circle in upper left__
 
-// Add circles and floor numbers to visible SVGs
 document.querySelectorAll("svg").forEach(svg => {
-    const floor = parseInt(svg.id.split('_')[1], 10); // Extract floor number from id
-    const parentWidth = svg.clientWidth; // Get the width of the SVG
+    const floor = parseInt(svg.id.split('_')[1], 10);
+    const parentWidth = svg.clientWidth;
 
     if (!parentWidth || isNaN(floor)) {
         console.warn(`Skipping SVG: ${svg.id} - Invalid floor number or parent width`);
         return;
     }
 
-    const d3Svg = d3.select(svg); // Use D3 to select the SVG
+    const d3Svg = d3.select(svg);
 
-    const circleRadius = parentWidth / 50; // Set circle radius
-    const circlePosition = parentWidth / 20; // Position for the circle
+    const circleRadius = parentWidth / 50;
+    const circlePosition = parentWidth / 20;
 
-    // Add a circle in the top-left corner with a border (edge)
     d3Svg
         .append("circle")
-        .attr("cx", circlePosition) // Position the circle
+        .attr("cx", circlePosition)
         .attr("cy", circlePosition)
         .attr("r", circleRadius)
-        .attr("fill", "white") // Fill color
-        .attr("stroke", "red") // Edge color
-        .attr("stroke-width", circleRadius / 8); // Edge thickness
+        .attr("fill", "white")
+        .attr("stroke", "red")
+        .attr("stroke-width", circleRadius / 8);
 
-    // Add the floor number text inside the circle
     d3Svg
         .append("text")
-        .attr("x", circlePosition) // Match circle position
-        .attr("y", circlePosition + circleRadius * 0.15) // Fine-tune to center vertically
-        .attr("text-anchor", "middle") // Horizontal centering
-        .attr("dominant-baseline", "middle") // Align vertically to the middle
-        .attr("font-size", circleRadius * 1.2) // Scale font size
-        .attr("fill", "black") // Set text color
-        .text(floor); // Set the floor number as text
+        .attr("x", circlePosition)
+        .attr("y", circlePosition + circleRadius * 0.15)
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "middle")
+        .attr("font-size", circleRadius * 1.2)
+        .attr("fill", "black")
+        .text(floor);
 });
 
