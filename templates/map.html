@@ -8,20 +8,19 @@
 </head>
 <body>
     <h1>Route</h1>
-    <p>Route van #{{ src }} naar {{dest_label}} met snelheid {{speed}} m/s.</p>
-    <p>Route: {{route}}</p>
-    <p>Tijd: {{time}} seconden</p>
-    <details>
-        <summary class="h1">Uitleg</summary>
+    <p>Van #{{ src }} naar {{dest_label}} met snelheid {{speed}} m/s.</p>
+    <p><b>Route</b>: {{route}}</p>
+    <p><b>Tijd</b>: {{time}} seconden</p>
+    <p><b>ETA</b>: {{ETA}}</p>
+    <p>
         Deze plattegronden staan in volgorde van hoogte
          (hoogste eerst), niet in chronologische
          volgorde voor de route. Vertrekpunt en
          aankomstpunt zijn een grote stip. Waar
          de route stopt op een plattegrond, moet
-         je omhoog/omlaag. Als verd. 2 overgaat naar
-         verd. 0 (Begane Grond) zonder verd. 1, dan moet je
-         de glijbaan nemen!
-    </details>
+         je omhoog/omlaag. Als verdieping 2 overgaat naar
+         verdieping 0 (Begane Grond), zonder verdieping 1, dan moet je
+         met de glijbaan!</p>
 
     <svg id="svg_4" style="background-image: url('{{ url_for('static', filename='images/hyperion_plattegronden/4.png') }}');"></svg>
     <svg id="svg_3" style="background-image: url('{{ url_for('static', filename='images/hyperion_plattegronden/3.png') }}');"></svg>

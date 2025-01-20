@@ -13,19 +13,21 @@
         <br>
         <input type="range" min="1" max="200" value="100" class="slider" id="speed_slider" name="speed_slider">
         <br><br>
+        <label for="time">Tijd:</label>
+        <input type="time" id="time" name="time" step="1" required>
+        <br><br>
         <label for="src">Van:</label>
-        <br>
         <span>#</span><input type="number" id="srcbox_van" name="srcbox_van" value="" maxlength="3" required>
         <br><br>
         <label for="src">Naar:</label>
-        <br>
+
         <span>#</span><input type="number" id="srcbox_naar" name="srcbox_naar" value="" maxlength="3" required>
         <div id="submit">
             <input type="submit">
         </div>
     </form>
     <br>
-    <p>Let op! De cijfers zijn niet gelijk aan de lokaalnummers. Kijk bij "kaarten" en "populaire locaties" om jouw vertrek- en aankomstpunt te vinden.</p>
+    <p><b>Let op!</b> De cijfers zijn <i>niet</i> gelijk aan de lokaalnummers. Kijk bij "kaarten" en "populaire locaties" om jouw vertrek- en aankomstpunt te vinden.</p>
     <br>
     <div id="kaarten">
         <details>
