@@ -15,6 +15,8 @@
         <br><br>
         <label for="time">Tijd:</label>
         <input type="time" id="time" name="time" step="1" required>
+        <input type="checkbox" id="useNow">
+        <label for="useNow">vertrek nu</label>
         <br><br>
         <label for="src">Van:</label>
         <span>#</span><input type="number" id="srcbox_van" name="srcbox_van" value="" maxlength="3" required>
@@ -133,12 +135,13 @@
         
     </script>
     <script>
-        const route = {{route}};
+        const route = [0, 1, 16, 17, 18, 24, 7, 5, 6, 70, 62, 71, 72, 119, 118, 148, 149, 152, 153, 155, 156];
         const graph = {{graph}};
         map = false;
     </script>
     <script src="{{ url_for('static', filename='js/submit_width.js') }}"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/time_now.js')}}"></script>
 </body>
 </html>

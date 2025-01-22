@@ -81,3 +81,9 @@ td {
     border-top:1px solid black;
     border-left:1px solid black;
 }
+
+.disabled-look {
+    background-color: #f0f0f0;
+    color: #484848;
+    pointer-events: none;
+  }

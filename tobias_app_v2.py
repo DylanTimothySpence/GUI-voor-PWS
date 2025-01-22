@@ -21,9 +21,9 @@ def login(src):
             print(f"time_input: {time_input}")
             return redirect(url_for("map", src=srcbox_van, dest_label=dest_label, dest_number=srcbox_naar, speed=speed_slider, time_input=time_input))
         else:
-            return render_template("login_tobias.html", src=src, graph=csv_to_adjacency_list('hlgraph.csv'), route=[0, 1, 16, 17, 18, 24, 7, 5, 6, 70, 62, 71, 72, 119, 118, 148, 149, 152, 153, 155, 156])
+            return render_template("login_tobias.html", src=src, graph=csv_to_adjacency_list('hlgraph.csv'))
     except:
-        return render_template("login_tobias.html", src=src)
+        return render_template("login_tobias.html", src=src, graph=csv_to_adjacency_list('hlgraph.csv'))
 
 @app.route("/van-<src>-naar-<dest_label>-<dest_number>-snelheid=<speed>-time=<time_input>")
 def map(src, dest_label, dest_number, speed, time_input):
