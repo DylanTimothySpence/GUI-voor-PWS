@@ -3,6 +3,7 @@ from dijkstra import run_algorithm
 from converter import csv_to_adjacency_list
 import os
 from datetime import datetime, timedelta
+from dynamic_graphs import graph_for_time, convert_to_time
 
 app = Flask(__name__)
 
@@ -26,8 +27,10 @@ def login(src):
 
 @app.route("/van-<src>-naar-<dest_label>-<dest_number>-snelheid=<speed>-time=<time_input>")
 def map(src, dest_label, dest_number, speed, time_input):
-    path = 'hlgraph.csv'
-    graph = csv_to_adjacency_list(path)
+    # path = 'hlgraph.csv'
+    # graph = csv_to_adjacency_list(path)
+    # print(f"time_input: {time_input}, type: {type(time_input)}")
+    graph = graph_for_time(convert_to_time(time_input))
     route, time = run_algorithm(graph=graph, startnode=int(src), endnode=int(dest_number), speed=float(speed))
     ETA = (datetime.strptime(time_input, "%H:%M:%S") + timedelta(seconds=time)).strftime("%H:%M:%S")
     time_str = f"{int(time // 60)} minuten en {round(time % 60)} seconden"

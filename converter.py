@@ -27,7 +27,8 @@ graph = csv_to_adjacency_list(file_path)
 
 # Print the graph with trailing comma
 
-# print("graph = {")
-# for node, edges in sorted(graph.items()):
-#     print(f"    {node}: {edges},")
-# print("}")
+def print_graph_formatter(input_graph):
+    print("graph = {")
+    for node, edges in sorted(input_graph.items()):
+        print(f"    {node}: {edges},")
+    print("}")
