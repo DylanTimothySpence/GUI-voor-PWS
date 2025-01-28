@@ -415,8 +415,8 @@ document.querySelectorAll("svg").forEach(svg => {
         .attr("cx", circlePosition)
         .attr("cy", circlePosition)
         .attr("r", circleRadius)
-        .attr("fill", "white")
-        .attr("stroke", "red")
+        .attr("fill", "red")
+        .attr("stroke", "black")
         .attr("stroke-width", circleRadius / 8);
 
     d3Svg
