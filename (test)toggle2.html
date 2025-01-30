@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Toggle Button</title>
+    <style>
+        .toggle-button {
+            width: 200px;
+            height: 50px;
+            display: flex;
+            background-color: white;
+            border: 2px solid #2196F3;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-button .half {
+            width: 50%;
+            height: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .half-blue {
+            background-color: #2196F3;
+        }
+
+        .half-white {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="toggle-button" onclick="toggleButtonColor(this)">
+        <div class="half half-blue"></div>
+        <div class="half half-white"></div>
+    </button>
+
+    <script>
+        function toggleButtonColor(button) {
+            const halves = button.querySelectorAll('.half');
+            halves[0].classList.toggle('half-blue');
+            halves[1].classList.toggle('half-white');
+        }
+    </script>
+
+</body>
+</html>

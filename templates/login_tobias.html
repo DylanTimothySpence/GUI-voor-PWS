@@ -16,7 +16,13 @@
         <label for="time">Tijd:</label>
         <input type="time" id="time" name="time" step="1" required>
         <input type="checkbox" id="useNow">
-        <label for="useNow">vertrek nu</label>
+        <label for="useNow">gebruik huidige tijd</label>
+        <br><br>
+        <label for="typeTijd">Soort tijd:<label>            
+        <select id="typeTijd" name="typeTijd" required>
+            <option value="vertrek">Vertrek</option>
+            <option value="aankomst">Aankomst</option>
+        </select>        
         <br><br>
         <label for="src">Van:</label>
         <span>#</span><input type="number" id="srcbox_van" name="srcbox_van" value="" maxlength="3" required>
