@@ -32,9 +32,14 @@ def map(src, dest_label, dest_number, speed, time_input, type_tijd):
     # print(f"time_input: {time_input}, type: {type(time_input)}")
     graph = graph_for_time(convert_to_time(time_input))
     route, time = run_algorithm(graph=graph, startnode=int(src), endnode=int(dest_number), speed=float(speed))
-    ETA_or_PTL = (datetime.strptime(time_input, "%H:%M:%S") + timedelta(seconds=time)).strftime("%H:%M:%S")
+    if type_tijd == 'aankomst':
+        ETA_or_PTL = (datetime.strptime(time_input, "%H:%M:%S") - timedelta(seconds=time)).strftime("%H:%M:%S")
+        time_message = 'Vertrek om'
+    else:
+        ETA_or_PTL = (datetime.strptime(time_input, "%H:%M:%S") + timedelta(seconds=time)).strftime("%H:%M:%S")
+        time_message = 'ETA'
     time_str = f"{int(time // 60)} minuten en {round(time % 60)} seconden"
-    return render_template("map.html", src=src, dest_label=dest_label, dest_number=dest_number, speed=speed, route=route, time=time_str, graph=graph, ETA_or_PTL = ETA_or_PTL)
+    return render_template("map.html", src=src, dest_label=dest_label, dest_number=dest_number, speed=speed, route=route, time=time_str, graph=graph, ETA_or_PTL = ETA_or_PTL, time_message=time_message)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5001))  # Default to port 5001
