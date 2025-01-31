@@ -1,4 +1,4 @@
-from datetime import time, datetime
+from datetime import time, datetime, timedelta
 from converter import print_graph_formatter
 
 graph_normal = {
@@ -677,6 +677,45 @@ def convert_to_time(value):
         except ValueError:
             raise ValueError(f"Cannot convert '{value}' to a time object.")
     return value
+
+def add_times(time1, time2):
+    # Convert inputs to time objects if they are not already
+    time1 = convert_to_time(time1)
+    time2 = convert_to_time(time2)
+    
+    # Convert time objects to timedelta (assuming both are same day-based)
+    dt1 = timedelta(hours=time1.hour, minutes=time1.minute, seconds=time1.second)
+    dt2 = timedelta(hours=time2.hour, minutes=time2.minute, seconds=time2.second)
+    
+    # Add the time deltas
+    total = dt1 + dt2
+    
+    # Handle overflow beyond 24 hours
+    total_seconds = total.total_seconds() % 86400
+    new_time = (datetime.min + timedelta(seconds=total_seconds)).time()
+    print(f"new_time: {new_time}")
+    return new_time
+
+def subtract_times(time1, time2):
+    # Convert inputs to time objects if they are not already
+    time1 = convert_to_time(time1)
+    time2 = convert_to_time(time2)
+    
+    # Convert time objects to timedelta (assuming both are same day-based)
+    dt1 = timedelta(hours=time1.hour, minutes=time1.minute, seconds=time1.second)
+    dt2 = timedelta(hours=time2.hour, minutes=time2.minute, seconds=time2.second)
+    
+    # Subtract the time deltas
+    total = dt1 - dt2
+    
+    # Handle overflow beyond 24 hours
+    total_seconds = total.total_seconds() % 86400
+    new_time = (datetime.min + timedelta(seconds=total_seconds)).time()
+    print(f"new_time: {new_time}")    
+    return new_time
+
+
+print(add_times('00:00:00', '00:00:01'))
 
 def graph_for_time(input_time):
     for label, ranges in time_ranges:
