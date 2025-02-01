@@ -42,7 +42,7 @@ def find_route(startnode, endnode, previous_node):
 
 
 def walking_time(route_weight, speed):
-    time = round((route_weight * (average_speed/speed)),2)
+    time = round((route_weight * (average_speed/speed)),0)
     return time
 
 def run_algorithm(graph, startnode, endnode, speed):
