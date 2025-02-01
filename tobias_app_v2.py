@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for, redirect
-from dijkstra import run_algorithm
+from dijkstra_v4 import run_algorithm
 from converter import csv_to_adjacency_list
 import os
 from datetime import datetime, timedelta, time
@@ -27,6 +27,7 @@ def map(src, dest, speed, time_input, type_tijd):
     if type_tijd == 'aankomst':
         graph = graph_for_time(subtract_times(time_input, "00:00:30"))
         route, time = run_algorithm(graph=graph, startnode=int(src), endnode=int(dest), speed=float(speed))
+        time = round(time, 0)
         leave_time = (datetime.strptime(time_input, "%H:%M:%S") - timedelta(seconds=time)).strftime("%H:%M:%S")
         arrival_time = time_input
         leave_message = 'Vertrek om'
@@ -34,6 +35,7 @@ def map(src, dest, speed, time_input, type_tijd):
     else:
         graph = graph_for_time(add_times(time_input, "00:00:30"))
         route, time = run_algorithm(graph=graph, startnode=int(src), endnode=int(dest), speed=float(speed))
+        time = round(time, 0)
         leave_time = time_input
         arrival_time = (datetime.strptime(time_input, "%H:%M:%S") + timedelta(seconds=time)).strftime("%H:%M:%S")
         leave_message = 'Vertrek om'
