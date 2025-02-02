@@ -1,6 +1,24 @@
-from datetime import time, datetime, timedelta
-from converter import print_graph_formatter
+#functie om het verschil te berekenen met de originele graaf, handig om te zien waar precies file is
+def calculate_difference(graph):
+    new_graph = {}
+    for node, edges in graph.items():
+        new_edges = []
+        for index, edge in enumerate(edges):
+            new_weight = edge[1] - graph_normal[node][index][1]
+            new_edges.append([edge[0], new_weight])
+        new_graph[node] = new_edges
+    return new_graph
 
+#functie om een graaf overzichtelijk te printen
+def print_graph(graph):
+    print('graph = {')
+    for node, edges in graph.items():
+        print(f'{node}', end=' : [')
+        for edge in edges:
+            print(f'[{edge[0]}, {edge[1]}]', end=',')
+        print('],')
+    print('}')
+        
 graph_normal = {
 0 : [[1, 3.36],],
 1 : [[0, 3.36],[2, 6.31],[16, 12.39],],
@@ -646,86 +664,4 @@ graph_start_to_class = {
 158 : [[157, 2.73],[86, 1.89],[87, 2.94],],
 }
 
-ranges_class_to_class = [
-    (time(9,40), time(9,45)),
-    (time(11,25), time(11,30)),
-    (time(13,25), time(13,30)),
-    (time(15,10), time(15,15))
-]
-ranges_start_to_class = [
-    (time(8, 55), time(9, 0))
-]
-ranges_class_to_break = [
-    (time(10, 30), time(10, 35)),
-    (time(10, 40), time(10, 45)),
-    (time(12, 15), time(12, 20)),
-    (time(12, 40), time(12, 45)),
-    (time(14, 15), time(14, 20)),
-    (time(14, 25), time(14, 30))
-]
 
-time_ranges = [
-    (graph_class_to_class, ranges_class_to_class),
-    (graph_start_to_class, ranges_start_to_class),
-    (graph_class_to_break, ranges_class_to_break),
-]
-
-def convert_to_time(value):
-    if not isinstance(value, (datetime, time)):
-        try:
-            converted_time = datetime.strptime(value, "%H:%M:%S").time()
-            return converted_time
-        except ValueError:
-            raise ValueError(f"Cannot convert '{value}' to a time object.")
-    return value
-
-def add_times(time1, time2):
-    # Convert inputs to time objects if they are not already
-    time1 = convert_to_time(time1)
-    time2 = convert_to_time(time2)
-    
-    # Convert time objects to timedelta (assuming both are same day-based)
-    dt1 = timedelta(hours=time1.hour, minutes=time1.minute, seconds=time1.second)
-    dt2 = timedelta(hours=time2.hour, minutes=time2.minute, seconds=time2.second)
-    
-    # Add the time deltas
-    total = dt1 + dt2
-    
-    # Handle overflow beyond 24 hours
-    total_seconds = total.total_seconds() % 86400
-    new_time = (datetime.min + timedelta(seconds=total_seconds)).time()
-    print(f"new_time: {new_time}")
-    return new_time
-
-def subtract_times(time1, time2):
-    # Convert inputs to time objects if they are not already
-    time1 = convert_to_time(time1)
-    time2 = convert_to_time(time2)
-    
-    # Convert time objects to timedelta (assuming both are same day-based)
-    dt1 = timedelta(hours=time1.hour, minutes=time1.minute, seconds=time1.second)
-    dt2 = timedelta(hours=time2.hour, minutes=time2.minute, seconds=time2.second)
-    
-    # Subtract the time deltas
-    total = dt1 - dt2
-    
-    # Handle overflow beyond 24 hours
-    total_seconds = total.total_seconds() % 86400
-    new_time = (datetime.min + timedelta(seconds=total_seconds)).time()
-    print(f"new_time: {new_time}")    
-    return new_time
-
-
-# print(subtract_times('00:00:00', '00:00:01'))
-
-def graph_for_time(input_time):
-    for label, ranges in time_ranges:
-        for lower, upper in ranges:
-            if lower <= input_time <= upper:
-                return label  # Return the corresponding label immediately
-    
-    # If no range matches, return "NORMAL"
-    return graph_normal
-
-# print_graph_formatter(graph_for_time(convert_to_time("9:00:00")))
-# print_graph_formatter(graph_for_time(convert_to_time("9:00:01")))
