@@ -2,7 +2,6 @@ const useNowCheckbox = document.getElementById('useNow');
 const timeInput = document.getElementById('time');
 let intervalId;
 
-// Function to update the time input to the current time
 const updateTime = () => {
   const now = new Date();
   const hours = now.getHours().toString().padStart(2, '0');
@@ -11,16 +10,15 @@ const updateTime = () => {
   timeInput.value = `${hours}:${minutes}:${seconds}`;
 };
 
-// Event listener for the "Use Now" checkbox
 useNowCheckbox.addEventListener('change', () => {
   if (useNowCheckbox.checked) {
-    updateTime(); // Set the initial time immediately
-    intervalId = setInterval(updateTime, 1000); // Update every second
-    timeInput.classList.add('disabled-look'); // Add the "disabled" look
-    timeInput.readOnly = true; // Prevent manual editing
+    updateTime();
+    intervalId = setInterval(updateTime, 1000);
+    timeInput.classList.add('disabled-look');
+    timeInput.readOnly = true;
   } else {
-    clearInterval(intervalId); // Stop the interval
-    timeInput.classList.remove('disabled-look'); // Remove the "disabled" look
-    timeInput.readOnly = false; // Allow manual editing
+    clearInterval(intervalId);
+    timeInput.classList.remove('disabled-look');
+    timeInput.readOnly = false;
   }
 });

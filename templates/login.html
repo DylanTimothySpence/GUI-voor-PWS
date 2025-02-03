@@ -8,131 +8,129 @@
 </head>
 <body>
     <h1>Hyperion Navigator</h1>
-
     <form action="/" method="POST">
         <label for="speed">Snelheid: </label><span id="speed_display">1.34</span><span> m/s (1.34 is gemiddeld)</span>
         <br>
         <input type="range" min="1" max="200" value="100" class="slider" id="speed_slider" name="speed_slider">
         <br><br>
+        <label for="time">Tijd:</label>
+        <input type="time" id="time" name="time" step="1" required>
+        <br>
+        <input type="checkbox" id="useNow">
+        <label for="useNow">gebruik huidige tijd</label>
+        <br><br>
+        <label for="typeTijd">Dit is de tijd van:<label>            
+        <select id="typeTijd" name="typeTijd" required>
+            <option value="vertrek">Vertrek</option>
+            <option value="aankomst">Aankomst</option>
+        </select>        
+        <br><br>
         <label for="src">Van:</label>
-        <br>
-        <span>#</span><input type="number" id="srcbox" name="srcbox" value="{{src}}" maxlength="3" required>
+        <span>#</span><input type="number" id="srcbox_van" name="srcbox_van" value="" maxlength="3" required>
         <br><br>
-        <label>Naar:</label>
-        <br>
-        <!-- Container for radio buttons -->
-        <div id="radio-container"></div>
-        <br><br>
-        <input type="hidden" id="dest_label" name="dest_label">
+        <label for="src">Naar:</label>
+
+        <span>#</span><input type="number" id="srcbox_naar" name="srcbox_naar" value="" maxlength="3" required>
         <div id="submit">
             <input type="submit">
         </div>
     </form>
-    <br><br><br><br><br><br><br><br>
+    <br>
+    <p><b>Let op!</b> De cijfers zijn <i>niet</i> gelijk aan de lokaalnummers. Kijk bij "kaarten" en "populaire locaties" om jouw vertrek- en aankomstpunt te vinden.</p>
+    <br>
+    <div id="kaarten">
+        <details>
+            <summary class="h1">Kaarten</summary>
+            <svg id="svg_4" style="background-image: url('{{ url_for('static', filename='images/hyperion_plattegronden/4.png') }}');"></svg>
+            <svg id="svg_3" style="background-image: url('{{ url_for('static', filename='images/hyperion_plattegronden/3.png') }}');"></svg>
+            <svg id="svg_2" style="background-image: url('{{ url_for('static', filename='images/hyperion_plattegronden/2.png') }}');"></svg>
+            <svg id="svg_1" style="background-image: url('{{ url_for('static', filename='images/hyperion_plattegronden/1.png') }}');"></svg>
+            <svg id="svg_0" style="background-image: url('{{ url_for('static', filename='images/hyperion_plattegronden/BG.png') }}');"></svg>
+            <svg id="svg_-1" style="background-image: url('{{ url_for('static', filename='images/hyperion_plattegronden/kelder.png') }}');"></svg>        
+        </details>
+    </div>
+    <div id="populaire_bestemmingen">
+        <details>
+            <summary class="h1">Populaire locaties</summary>
+            <table>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Locatie (alfabetisch)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td>65</td><td>Administratie (yr-12)</td></tr>
+                <tr><td>56</td><td>Auditorium</td></tr>
+                <tr><td>0</td><td>Bandhok</td></tr>
+                <tr><td>33</td><td>Bibliotheek</td></tr>
+                <tr><td>128</td><td>Bureau V (yr-31)</td></tr>
+                <tr><td>126</td><td>Decaan (yr-33)</td></tr>
+                <tr><td>25</td><td>Docenten werkruimte (yr-03)</td></tr>
+                <tr><td>27</td><td>Examensecretariaat (yr-01)</td></tr>
+                <tr><td>3</td><td>Fietsenkelder</td></tr>
+                <tr><td>147</td><td>Gym 40</td></tr>
+                <tr><td>146</td><td>Gym 41</td></tr>
+                <tr><td>141</td><td>Het Nest</td></tr>
+                <tr><td>71</td><td>Ingang lerarenkamer</td></tr>
+                <tr><td>19</td><td>Kantine</td></tr>
+                <tr><td>151</td><td>Kleedruimte heren noordzijde</td></tr>
+                <tr><td>139</td><td>Kleedruimte heren zuidzijde</td></tr>
+                <tr><td>154</td><td>Kleedruimte dames noordzijde</td></tr>
+                <tr><td>145</td><td>Kleedruimte dames zuidzijde</td></tr>
+                <tr><td>92</td><td>Lokaal 24</td></tr>
+                <tr><td>29</td><td>Lokaal 01</td></tr>
+                <tr><td>30</td><td>Lokaal 02b</td></tr>
+                <tr><td>28</td><td>Lokaal 02a</td></tr>
+                <tr><td>32</td><td>Lokaal 03</td></tr>
+                <tr><td>40</td><td>Lokaal 12</td></tr>
+                <tr><td>39</td><td>Lokaal 13</td></tr>
+                <tr><td>45</td><td>Lokaal 14</td></tr>
+                <tr><td>47</td><td>Lokaal 15a</td></tr>
+                <tr><td>48</td><td>Lokaal 15b</td></tr>
+                <tr><td>52</td><td>Lokaal 16</td></tr>
+                <tr><td>75</td><td>Lokaal 21a</td></tr>
+                <tr><td>78</td><td>Lokaal 21b</td></tr>
+                <tr><td>74</td><td>Lokaal 20</td></tr>
+                <tr><td>79</td><td>Lokaal 22</td></tr>
+                <tr><td>88</td><td>Lokaal 23a</td></tr>
+                <tr><td>89</td><td>Lokaal 23b</td></tr>
+                <tr><td>87</td><td>Lokaal 25 (Muzieklokaal)</td></tr>
+                <tr><td>73</td><td>Lokaal 26</td></tr>
+                <tr><td>104</td><td>Lokaal 34a</td></tr>
+                <tr><td>103</td><td>Lokaal 34b</td></tr>
+                <tr><td>96</td><td>Lokaal 34c</td></tr>
+                <tr><td>100</td><td>Lokaal 35</td></tr>
+                <tr><td>116</td><td>Lokaal 30 (3D atelier)</td></tr>
+                <tr><td>113</td><td>Lokaal 32a</td></tr>
+                <tr><td>112</td><td>Lokaal 32b</td></tr>
+                <tr><td>107</td><td>Lokaal 33 (Makerspace)</td></tr>
+                <tr><td>115</td><td>Lokaal 31 (2D atelier)</td></tr>
+                <tr><td>133</td><td>Lokaal 44</td></tr>
+                <tr><td>134</td><td>Lokaal 43a</td></tr>
+                <tr><td>135</td><td>Lokaal 43b</td></tr>
+                <tr><td>136</td><td>Lokaal 42</td></tr>
+                <tr><td>156</td><td>Stormruimte</td></tr>
+                <tr><td>157</td><td>Teamleider (yr-21)</td></tr>
+                <tr><td>123</td><td>Teamleider (yr-35)</td></tr>
+                <tr><td>26</td><td>Teamleider (yr-02)</td></tr>
+                <tr><td>122</td><td>Rector (yr-36)</td></tr>
+                <tr><td>57</td><td>Roostermaker</td></tr>
+                <tr><td>23</td><td>WC’s begane grond</td></tr>
+                <tr><td>61</td><td>WC’s 1e verdieping</td></tr>
+                <tr><td>83</td><td>WC’s 2e verdieping</td></tr>
+                <tr><td>108</td><td>WC’s zuidzijde 3e verdieping</td></tr>
+                <tr><td>130</td><td>WC’s noordzijde 3e verdieping</td></tr>
+                <tr><td>150</td><td>WC’s 4e verdieping</td></tr>
+                <tr><td>129</td><td>Zorg (yr-32)</td></tr>
+                <tr><td>124</td><td>Zorg (yr-34)</td></tr>
+                </tbody>
+            </table>
+        </details>
+    </div>
+    <br><br><br><br><br><br><br>
     
     <script>
-        // List of lists (number, label) in the desired order
-        const dest = [
-        [0, "Bandhok"],
-        [3, "Fietsenkelder"],
-        [8, "Conciërge"],
-        [33, "Bibliotheek"],
-        [32, "Lokaal 03"],
-        [30, "Lokaal 02b"],
-        [28, "Lokaal 02a"],
-        [29, "Lokaal 01"],
-        [25, "Docenten werkruimte (yr-03)"],
-        [26, "Teamleider (yr-02)"],
-        [27, "Examensecretariaat (yr-01)"],
-        [19, "Kantine"],
-        [23, "WC’s begane grond"],
-        [45, "Lokaal 14"],
-        [47, "Lokaal 15a"],
-        [48, "Lokaal 15b"],
-        [52, "Lokaal 16"],
-        [57, "Roostermaker"],
-        [56, "Auditorium"],
-        [59, "Muziekhokjes"],
-        [61, "WC’s 1e verdieping"],
-        [65, "Administratie (yr-12)"],
-        [67, "Lokaal 10"],
-        [68, "Lokaal 11"],
-        [40, "Lokaal 12"],
-        [39, "Lokaal 13"],
-        [92, "Lokaal 24"],
-        [89, "Lokaal 23b"],
-        [88, "Lokaal 23a"],
-        [157, "Teamleider (yr-21)"],
-        [87, "Lokaal 25 (Muzieklokaal)"],
-        [83, "WC’s 2e verdieping"],
-        [78, "Lokaal 21b"],
-        [79, "Lokaal 22"],
-        [75, "Lokaal 21a"],
-        [74, "Lokaal 20"],
-        [73, "Lokaal 26"],
-        [71, "Ingang lerarenkamer"],
-        [96, "Lokaal 34c"],
-        [97, "TOA’s"],
-        [100, "Lokaal 35"],
-        [103, "Lokaal 34b"],
-        [104, "Lokaal 34a"],
-        [108, "WC’s zuidzijde 3e verdieping"],
-        [112, "Lokaal 32b"],
-        [113, "Lokaal 32a"],
-        [115, "Lokaal 31 (2D atelier)"],
-        [116, "Lokaal 30 (3D atelier)"],
-        [107, "Lokaal 33 (Makerspace)"],
-        [130, "WC’s noordzijde 3e verdieping"],
-        [122, "Rector (yr-36)"],
-        [123, "Teamleider (yr-35)"],
-        [124, "Zorg (yr-34)"],
-        [126, "Decaan (yr-33)"],
-        [129, "Zorg (yr-32)"],
-        [128, "Bureau V (yr-31)"],
-        [133, "Lokaal 44"],
-        [134, "Lokaal 43a"],
-        [135, "Lokaal 43b"],
-        [136, "Lokaal 42"],
-        [150, "WC’s 4e verdieping"],
-        [151, "Kleedruimte heren noordzijde"],
-        [154, "Kleedruimte dames noordzijde"],
-        [139, "Kleedruimte heren zuidzijde"],
-        [145, "Kleedruimte dames zuidzijde"],
-        [146, "Gym 41"],
-        [147, "Gym 40"],
-        [156, "Stormruimte"],
-        [141, "Het Nest"]
-    ];
-    
-    
-        // Get the container where the radio buttons will be displayed
-        const container = document.getElementById("radio-container");
-    
-        // Loop through the list to create radio buttons in the correct order
-        dest.forEach(([key, label]) => {
-            // Create the radio button
-            const radioButton = document.createElement("input");
-            radioButton.type = "radio";
-            radioButton.id = key;
-            radioButton.name = "dest_number";  // Ensure this is the same for all radio buttons
-            radioButton.value = key; // The value sent to the server will be the key
-            radioButton.required = true;
-
-            // Create the label
-            const radioLabel = document.createElement("label");
-            radioLabel.setAttribute("for", key);
-            radioLabel.textContent = label;
-    
-            // Append the radio button and label to the container
-            container.appendChild(radioButton);
-            container.appendChild(radioLabel);
-            container.appendChild(document.createElement("br"));  // Line break
-    
-            // Add event listener to update the hidden field with the corresponding label
-            radioButton.addEventListener("change", function () {
-                document.getElementById("dest_label").value = label;
-            });
-        });
 
         const slider = document.getElementById("speed_slider");
         const display = document.getElementById("speed_display");
@@ -143,7 +141,14 @@
         });
         
     </script>
+    <script>
+        const route = [0, 1, 16, 17, 18, 24, 7, 5, 6, 70, 62, 71, 72, 119, 118, 148, 149, 152, 153, 155, 156];
+        const graph = {{graph}};
+        map = false;
+    </script>
     <script src="{{ url_for('static', filename='js/submit_width.js') }}"></script>
-
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/time_now.js')}}"></script>
 </body>
 </html>

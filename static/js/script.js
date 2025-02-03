@@ -276,8 +276,6 @@ node_coordinates.forEach(node => {
         .attr("cy", d => scaleCoordinate(d.y, parentWidth))
         .attr("r", r)
         .attr("fill", d => route.includes(d.id) ? color_node_on_route : color_node_off_route)
-        // .attr("stroke", d => route.includes(d.id) ? color_node_on_route : color_node_off_route)
-        // .attr("stroke-width", r)
 
     svg.selectAll("text")
         .data(floorNodes)
@@ -325,77 +323,6 @@ node_coordinates.forEach(node => {
     }
 });
 
-//chatGPT code snippet to add triangles for the stairs
-
-/*
-
-// Initialize arrays to store the nodes where the user must go up or down
-const nodesGoingUp = [];
-const nodesGoingDown = [];
-
-// First, iterate through the route and compare z values of adjacent nodes to categorize them
-for (let i = 0; i < route.length - 1; i++) {
-    const currentNode = node_coordinates.find(n => n.id === route[i]);
-    const nextNode = node_coordinates.find(n => n.id === route[i + 1]);
-
-    // If the next node has a higher z value (going up)
-    if (nextNode && nextNode.z > currentNode.z) {
-        nodesGoingUp.push(currentNode);
-    }
-    // If the next node has a lower z value (going down)
-    else if (nextNode && nextNode.z < currentNode.z) {
-        nodesGoingDown.push(currentNode);
-    }
-}
-
-// Log the nodes where you must go up and down
-console.log("Nodes where you must go up:");
-console.log(nodesGoingUp);
-
-console.log("Nodes where you must go down:");
-console.log(nodesGoingDown);
-
-// After categorizing the nodes, now draw the triangles
-// Add an upward triangle for nodes where you must go down
-nodesGoingDown.forEach(node => {
-    const svg = d3.select(`#svg_${node.z}`);
-    if (!svg.empty()) {
-        svg.append("polygon")
-            .attr("points", `${node.x},${node.y} ${node.x - 10},${node.y - 10} ${node.x + 10},${node.y - 10}`)
-            .attr("fill", "black") // Change color as needed
-            .attr("stroke", "black")
-            .attr("stroke-width", 1);
-    }
-});
-
-// Add a downward triangle for nodes where you must go up
-nodesGoingUp.forEach(node => {
-    const svg = d3.select(`#svg_${node.z}`);
-    if (!svg.empty()) {
-        svg.append("polygon")
-            .attr("points", `${node.x},${node.y} ${node.x - 10},${node.y + 10} ${node.x + 10},${node.y + 10}`)
-            .attr("fill", "black") // Change color as needed
-            .attr("stroke", "black")
-            .attr("stroke-width", 1);
-    }
-});
-
-*/
-
-
-// refresh on resize
-
-
-// function windowResize() {
-//     setTimeout(function(){
-//         location.reload();
-//     }, 50); // 50 milliseconds
-//   }
-  
-// window.onresize = windowResize;
-
-//______________________ChatGPT solution for floor number in circle in upper left__
-
 document.querySelectorAll("svg").forEach(svg => {
     const floor = parseInt(svg.id.split('_')[1], 10);
     const parentWidth = svg.clientWidth;
@@ -429,4 +356,3 @@ document.querySelectorAll("svg").forEach(svg => {
         .attr("fill", "black")
         .text(floor);
 });
-

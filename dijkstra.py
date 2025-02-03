@@ -1,17 +1,11 @@
-# dit algoritme is dijkstra v4 met aanpassing door D Spence
-import math
-from datetime import datetime
-from converter import csv_to_adjacency_list
+# gekopieerd van dijkstra_v4.py in map 'profielwerkstuk' 1 feb 2025
+
+#import math
+#from datetime import datetime
+# from converter import csv_to_adjacency_list
 
 #print("-----------", (datetime.now().strftime("%Y-%m-%d %H:%M:%S")) ,"-----------")
-
-launch_time = datetime.now()
-
-route = []
-time = 0
-graph = {}
-speed = 1
-average_speed = 1.34 #meters per seconde
+#x=datetime.now()
 
 def check_connected_nodes(graph, node, path_weight, previous_node, visited):
     for connected_node, weight in graph[node]:  
@@ -32,18 +26,17 @@ def find_route(startnode, endnode, previous_node):
     route = []
     current_node = endnode
     while current_node != startnode:
-        if current_node is None:
-            raise ValueError(f"No path exists from {startnode} to {endnode}.")
         route.append(current_node)
         current_node = previous_node[current_node]
     route.append(current_node)
     route.reverse()
     return route
 
-
-def walking_time(route_weight, speed):
-    time = round((route_weight * (average_speed/speed)),0)
-    return time
+def walking_time(tsys, speed, fastest_path):
+    dtdp = 0.95
+    tcor = tsys - float((len(fastest_path)-2)*dtdp)
+    tgkz = round((tcor * (1.34/speed)),2)
+    return tgkz
 
 def run_algorithm(graph, startnode, endnode, speed):
     visited = [False] * len(graph)
@@ -52,15 +45,10 @@ def run_algorithm(graph, startnode, endnode, speed):
     previous_node = [None] * len(graph)
     while not visited[endnode]:
         check_connected_nodes(graph, closest_unvisited_node(path_weight, visited), path_weight, previous_node, visited)
-    route = find_route(startnode, endnode, previous_node)
-    time = walking_time(path_weight[endnode], speed)
-    return route, time
+    fastest_path = find_route(startnode, endnode, previous_node)
+    return fastest_path, walking_time(path_weight[endnode], speed, fastest_path)
 
-# path = 'oefen_adj_list.csv'
-# graph = csv_to_adjacency_list(path)
-# route, time = run_algorithm(graph=graph, startnode=3, endnode=13, speed=1)
-# print(f'route: {route}, time: {time}s')
-
-# terminate_time = datetime.now()
-# process_time = terminate_time - launch_time
-# print(f'time to run is: {process_time}')
+# route, time = run_algorithm(csv_to_adjacency_list('./graph_total/hlgraph.csv'), 134, 136, 1.34)
+# print(f"Route: {route}, Time: {time}")
+#y=datetime.now()
+#print('time to run is: ', y-x)

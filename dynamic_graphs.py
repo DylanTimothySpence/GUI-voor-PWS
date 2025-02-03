@@ -1,5 +1,4 @@
 from datetime import time, datetime, timedelta
-from converter import print_graph_formatter
 
 graph_normal = {
 0 : [[1, 3.36],],
