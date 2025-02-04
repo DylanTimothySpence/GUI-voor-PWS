@@ -1,12 +1,3 @@
-# gekopieerd van dijkstra_v4.py in map 'profielwerkstuk' 1 feb 2025
-
-#import math
-#from datetime import datetime
-# from converter import csv_to_adjacency_list
-
-#print("-----------", (datetime.now().strftime("%Y-%m-%d %H:%M:%S")) ,"-----------")
-#x=datetime.now()
-
 def check_connected_nodes(graph, node, path_weight, previous_node, visited):
     for connected_node, weight in graph[node]:  
         if path_weight[node] + weight < path_weight[connected_node]:  
@@ -47,8 +38,3 @@ def run_algorithm(graph, startnode, endnode, speed):
         check_connected_nodes(graph, closest_unvisited_node(path_weight, visited), path_weight, previous_node, visited)
     fastest_path = find_route(startnode, endnode, previous_node)
     return fastest_path, walking_time(path_weight[endnode], speed, fastest_path)
-
-# route, time = run_algorithm(csv_to_adjacency_list('./graph_total/hlgraph.csv'), 134, 136, 1.34)
-# print(f"Route: {route}, Time: {time}")
-#y=datetime.now()
-#print('time to run is: ', y-x)

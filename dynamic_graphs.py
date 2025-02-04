@@ -646,21 +646,21 @@ graph_start_to_class = {
 }
 
 ranges_class_to_class = [
-    (time(9,40), time(9,45)),
-    (time(11,25), time(11,30)),
-    (time(13,25), time(13,30)),
-    (time(15,10), time(15,15))
+    (time(9,41), time(9,44)),
+    (time(11,26), time(11,29)),
+    (time(13,26), time(13,29)),
+    (time(15,11), time(15,14))
 ]
 ranges_start_to_class = [
     (time(8, 55), time(9, 0))
 ]
 ranges_class_to_break = [
-    (time(10, 30), time(10, 35)),
-    (time(10, 40), time(10, 45)),
-    (time(12, 15), time(12, 20)),
-    (time(12, 40), time(12, 45)),
-    (time(14, 15), time(14, 20)),
-    (time(14, 25), time(14, 30))
+    (time(10, 28), time(10, 31)),
+    (time(10, 42), time(10, 45)),
+    (time(12, 13), time(12, 16)),
+    (time(12, 42), time(12, 45)),
+    (time(14, 13), time(14, 16)),
+    (time(14, 27), time(14, 30))
 ]
 
 time_ranges = [
@@ -679,52 +679,32 @@ def convert_to_time(value):
     return value
 
 def add_times(time1, time2):
-    # Convert inputs to time objects if they are not already
     time1 = convert_to_time(time1)
     time2 = convert_to_time(time2)
-    
-    # Convert time objects to timedelta (assuming both are same day-based)
     dt1 = timedelta(hours=time1.hour, minutes=time1.minute, seconds=time1.second)
-    dt2 = timedelta(hours=time2.hour, minutes=time2.minute, seconds=time2.second)
-    
-    # Add the time deltas
+    dt2 = timedelta(hours=time2.hour, minutes=time2.minute, seconds=time2.second)    
     total = dt1 + dt2
-    
-    # Handle overflow beyond 24 hours
     total_seconds = total.total_seconds() % 86400
     new_time = (datetime.min + timedelta(seconds=total_seconds)).time()
     print(f"new_time: {new_time}")
     return new_time
 
 def subtract_times(time1, time2):
-    # Convert inputs to time objects if they are not already
     time1 = convert_to_time(time1)
     time2 = convert_to_time(time2)
-    
-    # Convert time objects to timedelta (assuming both are same day-based)
     dt1 = timedelta(hours=time1.hour, minutes=time1.minute, seconds=time1.second)
     dt2 = timedelta(hours=time2.hour, minutes=time2.minute, seconds=time2.second)
-    
-    # Subtract the time deltas
     total = dt1 - dt2
-    
-    # Handle overflow beyond 24 hours
     total_seconds = total.total_seconds() % 86400
     new_time = (datetime.min + timedelta(seconds=total_seconds)).time()
     print(f"new_time: {new_time}")    
     return new_time
 
 
-# print(subtract_times('00:00:00', '00:00:01'))
-
 def graph_for_time(input_time):
     for label, ranges in time_ranges:
         for lower, upper in ranges:
             if lower <= input_time <= upper:
-                return label  # Return the corresponding label immediately
+                return label
     
-    # If no range matches, return "NORMAL"
     return graph_normal
-
-# print_graph_formatter(graph_for_time(convert_to_time("9:00:00")))
-# print_graph_formatter(graph_for_time(convert_to_time("9:00:01")))

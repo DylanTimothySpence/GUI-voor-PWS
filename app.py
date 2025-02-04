@@ -1,10 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect
 from dijkstra import run_algorithm
-from dynamic_graphs import graph_normal
-import os
-from datetime import datetime, timedelta, time
-from dynamic_graphs import graph_for_time, convert_to_time, add_times, subtract_times
-
+from datetime import datetime, timedelta
+from dynamic_graphs import graph_normal, graph_for_time, add_times, subtract_times
 app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
